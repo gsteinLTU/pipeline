@@ -1,0 +1,13 @@
+{
+  "name": "pipeline-local",
+  "owner": {
+    "name": "Gordon Stein"
+  },
+  "plugins": [
+    {
+      "name": "pipeline",
+      "source": "./",
+      "description": "A personal Pocock x Superpowers hybrid skills pipeline."
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "pipeline",
+  "description": "A personal Pocock x Superpowers hybrid: requirements interrogation, spec/ticket pipeline, TDD, and subagent-driven execution with two-axis review, backed by a local .scratch/ directory instead of an external tracker.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Gordon Stein"
+  },
+  "keywords": ["skills", "tdd", "code-review", "subagent-execution", "spec", "tickets"]
+}
