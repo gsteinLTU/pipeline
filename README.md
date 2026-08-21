@@ -12,6 +12,9 @@ Everything here is **vendored and adapted**, not installed as a dependency. Upst
 see `VENDORED.md` for exactly what was copied from where, at which commit, and how it was changed.
 For what's actually different in the result — not just the provenance — see `OVERVIEW.md`.
 
+Licensed MIT (see `LICENSE`). Both upstream projects are also MIT-licensed; their license text and
+copyright notices are preserved in `NOTICE`, as MIT requires for reused and adapted material.
+
 This repo assumes a solo practitioner: no team, no concurrency, no external issue tracker. All
 feature-work state lives in a disposable local `.scratch/` directory instead — see
 `CONVENTIONS.md` for its layout and every shared format (tickets, specs, decision maps, review

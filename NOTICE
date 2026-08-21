@@ -1,0 +1,67 @@
+This repository (`pipeline`) is licensed under the MIT License (see LICENSE),
+copyright (c) 2026 Gordon Stein.
+
+It vendors and adapts skill files from two upstream projects, both also
+MIT-licensed. Per-file provenance — which skill came from which upstream path,
+at which commit, and what was changed — is recorded in VENDORED.md; this file
+carries the attribution MIT requires for that reused and adapted material.
+
+## mattpocock/skills
+
+Copyright (c) 2026 Matt Pocock
+https://github.com/mattpocock/skills
+
+    MIT License
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+Skills in this repo derived from this source (see VENDORED.md for exact paths
+and modifications): `domain-modeling`, `codebase-design`, `diagnosing-bugs`,
+`code-review`, `to-spec`, `to-tickets`, `grilling` (substantially rewritten),
+`decision-map` (adapted from `wayfinder`), and parts of `tdd`.
+
+## obra/superpowers
+
+Copyright (c) 2025 Jesse Vincent
+https://github.com/obra/superpowers
+
+    MIT License
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+Skills in this repo derived from this source (see VENDORED.md for exact paths
+and modifications): parts of `tdd` (from `test-driven-development`), and
+`subagent-execution` (adapted from `subagent-driven-development`, with pieces
+of `using-git-worktrees` and `requesting-code-review`).
