@@ -99,10 +99,10 @@ working, disable it:
 `research`, `implement`, `wizard`, and superpowers' `brainstorming`, `writing-plans`,
 `executing-plans`, `using-git-worktrees`, `finishing-a-development-branch`, `using-superpowers`,
 `dispatching-parallel-agents`, `verification-before-completion`, `receiving-code-review`,
-`writing-skills`, `systematic-debugging`. See `VENDORED.md` for why.
+`writing-skills`, `systematic-debugging`. See `VENDORED.md` for why each was dropped.
 
-`handoff` is the most likely future re-add, once multi-session continuity without a tracker is
-needed.
+`wizard` is the most plausible future add, if infrastructure- or credential-walkthrough work
+becomes routine.
 
 ## Watch items
 
