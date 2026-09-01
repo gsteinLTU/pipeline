@@ -27,10 +27,10 @@ Replace every hit with the hardcoded `.scratch/` conventions in `CONVENTIONS.md`
 
 Find every place the skill calls another skill by name — `Skill tool with "<name>"`, a slash command, or a prose mention like "see the X skill." For each:
 
-- If the target is vendored in this repo, repoint the reference at this repo's skill name (which may differ from upstream's — check `VENDORED.md`).
+- If the target is vendored in this repo, repoint the reference at this repo's skill name (which may differ from upstream's — check `VENDORED.md`), and namespace it `pipeline:<name>` in the literal argument passed to the Skill tool. Unqualified names resolve ambiguously (or silently wrong) the moment another installed plugin happens to have a same-named skill — this bit `pipeline:code-review` in practice once a standalone `code-review` skill was installed alongside it.
 - If the target is not vendored, either vendor it too, stub the step out explicitly (say what would have happened and why it's skipped here), or inline the relevant behavior as prose.
 
-**Unresolved references fail silently** — the agent just improvises the step — so none may remain when you're done. Grep for `Skill tool with` across the repo and check every match resolves to a real directory under `skills/`.
+**Unresolved references fail silently** — the agent just improvises the step — so none may remain when you're done. Grep for `Skill tool with` across the repo and check every match both resolves to a real directory under `skills/` and is namespaced `pipeline:`.
 
 ## 4. Rewrite the frontmatter description
 
