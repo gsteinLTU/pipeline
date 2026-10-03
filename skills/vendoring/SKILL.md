@@ -40,6 +40,12 @@ Every description in this catalog must be mutually exclusive with its neighbors 
 - Add explicit negative space where two skills are adjacent: "not for X — use Y for that."
 - Decide `disable-model-invocation` for *this* context. This repo runs fully auto-invocable (no `disable-model-invocation` anywhere) rather than inheriting upstream's per-skill setting — don't assume upstream's choice was made for this catalog's routing needs.
 
+Test the description the way you'd test code: write 2-3 one-line user requests that should route
+to a neighboring skill, and confirm the new description doesn't claim them (and the reverse —
+requests that should route here, which the old description would have missed or misrouted). The
+same adversarial-scenario method applies to any behavior-affecting wording edit, not just
+descriptions — see `CLAUDE.md`'s "Editing a skill" section.
+
 ## 5. Conventions pass
 
 Any format the skill reads or writes that's shared with another skill — a ticket, a spec, a map, a ledger line, a review-axis vocabulary — must reference `CONVENTIONS.md`, never restate its own copy of the template inline. This is the single defense against the drift upstream's `Status:` field suffered (three files, three incompatible definitions, never reconciled): a conventions doc only works if nothing bypasses it.

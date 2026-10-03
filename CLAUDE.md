@@ -48,6 +48,10 @@ lines) skills read and write. This file only adds what those two don't already c
   (no `disable-model-invocation` anywhere), so routing depends entirely on descriptions not
   overlapping. When adding or editing a skill, add explicit negative space ("not for X — use Y for
   that") against its nearest neighbors, the way the existing descriptions do.
+- **Test behavior-affecting wording like code.** When you edit a routing description, a
+  model-selection heuristic, or a new gate, construct 2-3 tiny scenarios designed to make the
+  *old* wording fail, and confirm the new wording actually changes the resulting behavior rather
+  than just reading better — the same method `vendoring` uses for frontmatter descriptions.
 - **No tracker, no worktrees.** This pipeline assumes a solo practitioner with no external issue
   tracker and no git worktree isolation (worktrees have repeatedly broken autonomous runs here).
   Don't reintroduce either — feature-work state belongs under the target repo's disposable
