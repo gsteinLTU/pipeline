@@ -21,6 +21,8 @@ head=$3
 
 git rev-parse --verify --quiet "$base" >/dev/null || { echo "bad BASE: $base" >&2; exit 2; }
 git rev-parse --verify --quiet "$head" >/dev/null || { echo "bad HEAD: $head" >&2; exit 2; }
+git merge-base --is-ancestor "$base" "$head" || { echo "BASE is not an ancestor of HEAD: $base..$head" >&2; exit 2; }
+[ "$(git rev-list --count "${base}..${head}")" -gt 0 ] || { echo "empty range: $base..$head" >&2; exit 2; }
 
 reports_dir="$feature_dir/reports"
 mkdir -p "$reports_dir"
