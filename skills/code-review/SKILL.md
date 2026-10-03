@@ -35,6 +35,8 @@ If this review is closing out a `subagent-execution` run, also read `.scratch/<f
 
 Anything in the repo that documents how code should be written, such as `CODING_STANDARDS.md` or `CONTRIBUTING.md`.
 
+Also pull in any ADRs that bind the changed paths: root `docs/adr/` always, plus the owning context's own `docs/adr/` when `CONTEXT-MAP.md` exists and the change falls inside that context (see `domain-modeling`'s file structure) — root and per-context ADRs both apply, not one or the other, since cross-context decisions live at root precisely because they bind more than one context. Read every ADR in those directories and skip any not accepted — explicitly marked `proposed`, `deprecated`, or `superseded by` in its Status frontmatter (`domain-modeling/ADR-FORMAT.md`; no Status line means accepted); report only the ones the diff actually contradicts. An ADR is a standards source like any other here — the diff either honors the decision it recorded or it doesn't.
+
 On top of whatever the repo documents, the Standards axis always carries the **smell baseline** from `CONVENTIONS.md`'s Quality reference: a fixed set of Fowler code smells (_Refactoring_, ch.3) that applies even when a repo documents nothing. Two rules bind it:
 
 - **The repo overrides.** A documented repo standard always wins; where it endorses something the baseline would flag, suppress the smell.
