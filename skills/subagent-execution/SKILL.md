@@ -25,7 +25,7 @@ No worktree: this pipeline runs on a **plain feature branch**. Worktree isolatio
 
 1. **Create or check out the feature branch.** Never start implementation on main/master without your human partner's explicit consent.
 2. **Skip dependency install.** No `npm install`/`cargo build`/etc. step — if the branch genuinely needs one, that's the human's call, not this skill's.
-3. **Verify a clean test baseline** before dispatching anything: run the project's test command. If tests fail, report the failures and ask whether to proceed or investigate — a dirty baseline makes every later failure ambiguous, so don't proceed past it silently. If tests pass, record `MERGE_BASE` (`git merge-base main HEAD`, or the branch point) for the closing review, and report ready.
+3. **Verify a clean test baseline** before dispatching anything: run the project's test command and record the exact command in the ledger as `TEST_CMD` — step 5's completion gate checks every ticket's full-suite run against it. If tests fail, report the failures and ask whether to proceed or investigate — a dirty baseline makes every later failure ambiguous, so don't proceed past it silently. If tests pass, record `MERGE_BASE` (`git merge-base main HEAD`, or the branch point) for the closing review, and report ready.
 4. Conversation memory does not survive compaction. Track progress in `.scratch/<feature>/ledger.md`, not only in todos — it is the recovery map: the commits it names exist in git even when your context no longer remembers creating them. After compaction, trust the ledger and `git log` over your own recollection.
 5. Read every ticket under `.scratch/<feature>/issues/` once, and the spec at `.scratch/<feature>/spec.md` if it exists — the spec is the authority the tickets argue from, and conflicts inside a ticket resolve against it. A ticket set with no reachable spec gets a ledger note saying so — rulings made without one are provisional. Create a todo per ticket.
 
@@ -138,6 +138,21 @@ Never fix findings yourself in the controller session — your context stays cle
 Adjudicate only at the cap. Adjudicating earlier to end a loop is pre-judging with a different name. Every adjudication is a ledger entry — a silent discard is forbidden.
 
 ### 5. Complete the ticket
+
+Before setting `Status: resolved`, confirm the project's full test suite — `TEST_CMD`, recorded at
+Setup step 3 — has passed on this ticket's final commit. The implementer's first pass already
+covers this when no fix round ran (`implementer-prompt.md` has it run the full suite once before
+committing); check the report file actually shows `TEST_CMD` run, not a narrower command labelled
+"full suite." A fix round's scoped re-run — "the tests covering the amended code" — does
+not re-confirm it. If a fix round happened and its report doesn't already carry a full-suite pass
+at the final commit, ask whichever implementer holds the ticket (the resumed original in rounds
+1-3, the fresh agent from rounds 4-5) to run it and append command + output — this is verification,
+not a fix, and doesn't count as a new round.
+
+If that run comes back red: treat it as a Critical finding, not something to note and move past.
+If fix-loop rounds remain, it enters the loop like any other finding. If the cap is already hit,
+adjudicate it at the breaker — it is never parked silently, since a parked red suite poisons the
+baseline every later ticket inherits.
 
 When the review comes back clean — or every open finding is parked with a ruling at the cap — set `Status: resolved` on the ticket and append the completion line to the ledger in the same message as your other bookkeeping:
 
