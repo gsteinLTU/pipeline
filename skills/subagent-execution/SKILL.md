@@ -33,7 +33,7 @@ Before dispatching the first frontier ticket, scan the ticket set once for confl
 
 ## Model Selection
 
-Use the least powerful model that can handle each role to conserve cost and increase speed.
+Use the least expensive model likely to complete each role reliably in one pass. Turn count beats token price: a cheap model that needs several retries on a prose-heavy or judgment-heavy task isn't actually cheaper. Reserve the cheapest models for mechanical, tightly-specified work, and put at least a mid-tier floor under roles — implementation or review — that require substantial interpretation of prose or specification.
 
 **Mechanical implementation tickets** (isolated functions, clear acceptance criteria, 1-2 files): use a fast, cheap model.
 
@@ -41,7 +41,7 @@ Use the least powerful model that can handle each role to conserve cost and incr
 
 **Architecture and design tickets**: use the most capable available model. The final whole-branch review is one of these — dispatch it on the most capable available model, not the session default.
 
-**Review tasks**: choose the model with the same judgment, scaled to the diff's size, complexity, and risk. Scoped re-reviews of small fix diffs take a cheap-to-mid tier.
+**Review tasks**: choose the model with the same judgment, scaled to the diff's size, complexity, and risk. Scoped re-reviews of small, mechanical fix diffs take a cheap-to-mid tier; a small diff that's prose- or spec-heavy (interpreting wording, not just code) still gets the mid-tier floor above.
 
 **Fix-loop escalation (rounds 4-5)**: use a model at least one tier above the implementer that got stuck.
 

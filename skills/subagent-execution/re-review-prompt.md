@@ -102,7 +102,8 @@ Subagent (general-purpose):
 
 **Placeholders:**
 - `[MODEL]` — REQUIRED: reviewer model per SKILL.md Model Selection; scoped
-  re-reviews of small fix diffs take a cheap-to-mid tier
+  re-reviews of small, mechanical fix diffs take a cheap-to-mid tier, but a
+  prose- or spec-heavy fix diff still gets the mid-tier floor
 - `[TICKET_FILE]` — the ticket file (same file the implementer worked from)
 - `[FINDINGS]` — the Critical/Important findings and spec gaps from the
   previous review, copied verbatim, one per bullet
