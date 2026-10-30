@@ -52,6 +52,10 @@ lines) skills read and write. This file only adds what those two don't already c
   model-selection heuristic, or a new gate, construct 2-3 tiny scenarios designed to make the
   *old* wording fail, and confirm the new wording actually changes the resulting behavior rather
   than just reading better — the same method `vendoring` uses for frontmatter descriptions.
+- **Write US English.** Use US spellings in all prose, skill text, and comments ("behavior", not
+  "behaviour"; "judgment", not "judgement"; "optimize", not "optimise"). When vendoring or adapting
+  upstream text, normalize British spellings as part of the adaptation. Leave verbatim quotes and
+  external identifiers as they are.
 - **No tracker, no worktrees.** This pipeline assumes a solo practitioner with no external issue
   tracker and no git worktree isolation (worktrees have repeatedly broken autonomous runs here).
   Don't reintroduce either — feature-work state belongs under the target repo's disposable
