@@ -27,9 +27,18 @@ No worktree: this pipeline runs on a **plain feature branch**. Worktree isolatio
 2. **Skip dependency install.** No `npm install`/`cargo build`/etc. step — if the branch genuinely needs one, that's the human's call, not this skill's.
 3. **Verify a clean test baseline** before dispatching anything: run the project's test command and record the exact command in the ledger as `TEST_CMD` — step 5's completion gate checks every ticket's full-suite run against it. If tests fail, report the failures and ask whether to proceed or investigate — a dirty baseline makes every later failure ambiguous, so don't proceed past it silently. If tests pass, record `MERGE_BASE` (`git merge-base main HEAD`, or the branch point) for the closing review, and report ready.
 4. Conversation memory does not survive compaction. Track progress in `.scratch/<feature>/ledger.md`, not only in todos — it is the recovery map: the commits it names exist in git even when your context no longer remembers creating them. After compaction, trust the ledger and `git log` over your own recollection.
+
+   **Resuming.** If the ledger already exists when this skill starts, read it before anything else, reuse its `TEST_CMD` and `MERGE_BASE` rather than redoing Setup step 3, and never start a second ledger. A ticket with a `Task <NN>: complete` line is done — do not re-dispatch it; if its `Status:` disagrees, check `git log` for the commits the line names and fix the file. A ticket whose last ledger line is a fix round is mid-loop: resume at the next round. A ticket that is `Status: claimed` with no ledger line was dispatched and its outcome is unknown: take BASE from the previous completed ticket's `<head7>` (or `MERGE_BASE` for the first ticket), then look for its report file and for commits in `BASE..HEAD`. If either exists, go to "Review the ticket" in The Ticket Loop; if neither, re-dispatch a fresh implementer.
 5. Read every ticket under `.scratch/<feature>/issues/` once, and the spec at `.scratch/<feature>/spec.md` if it exists — the spec is the authority the tickets argue from, and conflicts inside a ticket resolve against it. A ticket set with no reachable spec gets a ledger note saying so — rulings made without one are provisional. Create a todo per ticket.
 
-Before dispatching the first frontier ticket, scan the ticket set once for conflicts, writing down what you checked as you check it: tickets that contradict each other or the spec's Implementation/Testing Decisions; anything a ticket explicitly mandates that the review rubric treats as a defect. Write the scan to the ledger. Rule on everything you find before execution begins, record each ruling in the ledger, then dispatch the first frontier ticket.
+Before dispatching the first frontier ticket, scan the ticket set once for conflicts, writing down what you checked as you check it:
+
+- tickets that contradict each other or the spec's Implementation/Testing Decisions
+- anything a ticket explicitly mandates that the review rubric treats as a defect (a test that asserts nothing, verbatim duplication of a logic block)
+
+The scan's output is a table, not a verdict. One row for every pair of tickets that share a file or an interface: the two tickets, what one produces against what the other consumes, and what you found. One row for every ticket: whether its own text agrees with itself — the tests it specifies against the code it specifies, the files it creates against the files it later touches. "The scan is clean" without those rows is not a scan you ran.
+
+Write the table to the ledger. Rule on everything you find before execution begins — each finding against the ticket text that mandates it — and record each ruling beside its row. If the scan is clean, proceed without comment. Then dispatch the first frontier ticket. The review loop remains the net for conflicts that only emerge from implementation.
 
 ## Model Selection
 
@@ -54,6 +63,8 @@ Walk the **frontier** as defined in `CONVENTIONS.md`: tickets that are `Status: 
 **Batch small same-shape work.** When several tickets are each a small, independent edit of the same kind — the same one-line fix, constant change, or field addition repeated across files — do not dispatch one subagent per ticket. Compose ONE dispatch listing every file and its change, send the whole batch to a single subagent, and review its diff as one unit. Reserve one-dispatch-per-ticket for work that needs its own judgment, its own tests, or its own review surface.
 
 Everything you paste into a dispatch prompt — and everything a subagent prints back — stays resident in your context for the rest of the session and is re-read on every later turn. Hand artifacts over as files.
+
+**Waiting on dispatched subagents:** never poll a wait interface with short timeouts, and never sit in one silent, open-ended wait either. While you have local work — ledger updates, packaging the next review, reading reports — keep working; child results arrive on their own. When you are genuinely idle, wait in bounded stretches (five to ten minutes, where your platform allows), and between stretches post one line of status and reconcile your live children: list them, and chase any that finished without reporting. A bounded stretch keeps nearly all of a long wait's efficiency while guaranteeing a stuck or lost child is noticed within minutes, not at the end of the session.
 
 ### 1. Dispatch the implementer
 
