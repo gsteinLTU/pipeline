@@ -190,7 +190,7 @@ Subagent (general-purpose):
 - `[BASE_SHA]` — commit before this ticket
 - `[HEAD_SHA]` — current commit
 - `[DIFF_FILE]` — REQUIRED: the path the controller wrote the review
-  package to (`scripts/review-package FEATURE_DIR BASE HEAD` prints the
+  package to (`bash scripts/review-package FEATURE_DIR BASE HEAD` prints the
   unique path it wrote; the package never enters the controller's context)
 
 **Reviewer returns:** Spec verdict (✅/❌/⚠️), Strengths, Issues
