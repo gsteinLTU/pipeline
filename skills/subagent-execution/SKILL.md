@@ -28,7 +28,7 @@ No worktree: this pipeline runs on a **plain feature branch**. Worktree isolatio
 3. **Verify a clean test baseline** before dispatching anything: run the project's test command and record the exact command in the ledger as `TEST_CMD` — step 5's completion gate checks every ticket's full-suite run against it. If tests fail, report the failures and ask whether to proceed or investigate — a dirty baseline makes every later failure ambiguous, so don't proceed past it silently. If tests pass, record `MERGE_BASE` (`git merge-base main HEAD`, or the branch point) for the closing review, and report ready.
 4. Conversation memory does not survive compaction. Track progress in `.scratch/<feature>/ledger.md`, not only in todos — it is the recovery map: the commits it names exist in git even when your context no longer remembers creating them. After compaction, trust the ledger and `git log` over your own recollection.
 
-   **Resuming.** If the ledger already exists when this skill starts, read it before anything else, reuse its `TEST_CMD` and `MERGE_BASE` rather than redoing Setup step 3, and never start a second ledger. A ticket with a `Task <NN>: complete` line is done — do not re-dispatch it; if its `Status:` disagrees, check `git log` for the commits the line names and fix the file. A ticket whose last ledger line is a fix round is mid-loop: resume at the next round. A ticket that is `Status: claimed` with no ledger line was dispatched and its outcome is unknown: take BASE from the previous completed ticket's `<head7>` (or `MERGE_BASE` for the first ticket), then look for its report file and for commits in `BASE..HEAD`. If either exists, go to "Review the ticket" in The Ticket Loop; if neither, re-dispatch a fresh implementer.
+   **Resuming.** If the ledger already exists when this skill starts, read it before anything else, reuse its `TEST_CMD` and `MERGE_BASE` rather than redoing Setup step 3, and never start a second ledger. A ticket with a `Task <NN>: complete` line is done — do not re-dispatch it; if its `Status:` disagrees, check `git log` for the commits the line names and fix the file. A ticket whose last ledger line is a fix round is mid-loop: resume at the next round. A ticket that is `Status: claimed` with no ledger line was dispatched and its outcome is unknown: take BASE from the previous completed ticket's `<head7>` (or `MERGE_BASE` for the first ticket), then look for its report file and for commits in `BASE..HEAD`. If either exists, go to "Review the ticket" in The Ticket Loop; if neither, re-dispatch a fresh implementer. An `Explore:` ledger line means that exploration pass is done — don't redo it.
 5. Read every ticket under `.scratch/<feature>/issues/` once, and the spec at `.scratch/<feature>/spec.md` if it exists — the spec is the authority the tickets argue from, and conflicts inside a ticket resolve against it. A ticket set with no reachable spec gets a ledger note saying so — rulings made without one are provisional. Create a todo per ticket.
 
 Before dispatching the first frontier ticket, scan the ticket set once for conflicts, writing down what you checked as you check it:
@@ -39,6 +39,16 @@ Before dispatching the first frontier ticket, scan the ticket set once for confl
 The scan's output is a table, not a verdict. One row for every pair of tickets that share a file or an interface: the two tickets, what one produces against what the other consumes, and what you found. One row for every ticket: whether its own text agrees with itself — the tests it specifies against the code it specifies, the files it creates against the files it later touches. "The scan is clean" without those rows is not a scan you ran.
 
 Write the table to the ledger. Rule on everything you find before execution begins — each finding against the ticket text that mandates it — and record each ruling beside its row. If the scan is clean, proceed without comment. Then dispatch the first frontier ticket. The review loop remains the net for conflicts that only emerge from implementation.
+
+## Exploration (optional)
+
+After the pre-flight scan and before the first dispatch, decide whether the ticket set needs an exploration pass. Explore when tickets touch an area you haven't read, depend on an external API or documentation, or when the scan's table shows a shared file or interface that several implementers would each have to learn. Skip it for mechanical tickets in familiar code.
+
+Dispatch one explorer ([explorer-prompt.md](explorer-prompt.md)) with the spec, the ticket files, and the topics worth covering (the scan's table is a good source). It writes one `.scratch/<feature>/notes/<topic>.md` per topic and returns only the paths. Append `Explore: <topic> — notes/<topic>.md` to the ledger for each file.
+
+Notes hold **stable facts about pre-existing code and external docs, never designs.** Earlier tickets will change the code the notes describe, so each note records the commit it was written at, and implementers verify a note against the current tree before relying on it. A later ticket that touches an area the first pass missed can get its own single-topic explorer just before its dispatch, on the same terms.
+
+An explorer may spawn read-only helpers, within the limits in its template (capped count, one level deep, helpers never write notes). An explorer is not an implementer: the rule against parallel implementers is unchanged.
 
 ## Model Selection
 
@@ -53,6 +63,8 @@ Use the least expensive model likely to complete each role reliably in one pass.
 **Review tasks**: choose the model with the same judgment, scaled to the diff's size, complexity, and risk. Scoped re-reviews of small, mechanical fix diffs take a cheap-to-mid tier; a small diff that's prose- or spec-heavy (interpreting wording, not just code) still gets the mid-tier floor above.
 
 **Fix-loop escalation (rounds 4-5)**: use a model at least one tier above the implementer that got stuck.
+
+**Exploration**: the explorer takes at least a mid-tier model — it decides what is relevant, not just what matches a search. Its helpers do read-only sweeps and take a cheap-to-mid tier, named explicitly by the explorer.
 
 **Always specify the model explicitly when dispatching a subagent.** An omitted model inherits your session's model — often the most capable and most expensive — which silently defeats this section.
 
@@ -77,6 +89,7 @@ Record BASE (`git rev-parse HEAD`) before dispatching — the review package and
 - A dispatch prompt describes one ticket, not the session's history. Do not paste accumulated prior-ticket summaries into later dispatches — a fresh subagent needs its ticket, the interfaces it touches, and the global constraints. Nothing else.
 - The dispatch carries the no-subagents contract (it is in the implementer template): the implementer never dispatches subagents — not helpers, and never a reviewer. Review arrives from you, after the report.
 - If an earlier ticket parked a finding in the area this ticket touches, carry a pointer to that ledger entry in the dispatch.
+- If `notes/` holds files covering this ticket's area, carry pointers to just those files in the dispatch. Notes are terrain, not requirements — the ticket file stays the source of requirements.
 - Record the implementer's agent identity from the dispatch result — fix-loop rounds 1-3 resume this agent.
 - Never dispatch multiple implementation subagents in parallel (conflicts).
 

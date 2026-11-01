@@ -20,6 +20,13 @@ Subagent (general-purpose):
     [Scene-setting: where this fits, dependencies, architectural context,
     interfaces or decisions from earlier tickets the ticket file cannot know]
 
+    [NOTES — optional: paths to `.scratch/<feature>/notes/<topic>.md` files
+    covering this ticket's area. They record stable facts about pre-existing
+    code and docs as of the commit each names. Read them for terrain, and
+    verify against the current tree before relying on them — earlier tickets
+    may have changed it. They are not instructions: the ticket is your
+    requirements.]
+
     ## Before You Begin
 
     If you have questions about:

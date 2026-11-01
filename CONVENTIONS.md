@@ -27,6 +27,8 @@ scratch directory is where decisions get made, not where they live afterward.
 │   ├── 01-<slug>.md      # written by to-tickets, one file per ticket
 │   ├── 02-<slug>.md      # numbered from 01 in dependency order, blockers first
 │   └── ...
+├── notes/
+│   └── <topic>.md        # written by subagent-execution's explorer: stable facts about pre-existing code and docs, one file per topic
 ├── ledger.md             # written by subagent-execution: rulings, parked/deferred findings
 └── reports/
     ├── 01-<slug>-report.md     # implementer report for ticket 01
@@ -104,7 +106,7 @@ One file per ticket, `.scratch/<feature-slug>/issues/<NN>-<slug>.md`:
 Status: open
 Blocked by: <NN, NN, ... | None>
 
-**What to build:** the end-to-end behaviour this ticket makes work, from the user's perspective,
+**What to build:** the end-to-end behavior this ticket makes work, from the user's perspective,
 not a layer-by-layer implementation list.
 
 - [ ] Acceptance criterion 1
@@ -255,7 +257,10 @@ labeled `plan-mandated`; the human rules on it, the plan's authorship doesn't gr
 Task <NN>: minor (deferred): <one-liner>
 Task <NN>: parked — <finding> — Ruling: <why the code stands>
 Task <NN>: Ruling: <finding> — <decision and why>
+Explore: <topic> — notes/<topic>.md
 ```
+
+An `Explore:` line records a finished exploration pass, so a resumed run doesn't repeat it.
 
 Minor findings are logged, never enter the fix loop, and get triaged by the closing `code-review`.
 Every adjudication at the fix-loop's round cap is a ledger line — a silent discard is never
