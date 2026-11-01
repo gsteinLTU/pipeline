@@ -33,7 +33,7 @@ If this review is closing out a `subagent-execution` run, also read `.scratch/<f
 
 ### 3. Identify the standards sources
 
-Anything in the repo that documents how code should be written, such as `CODING_STANDARDS.md` or `CONTRIBUTING.md`.
+Search the repo for every file that documents how code should be written. When `CODING_STANDARDS.md` or `CONTRIBUTING.md` exists, it must be on the list.
 
 Also pull in any ADRs that bind the changed paths: root `docs/adr/` always, plus the owning context's own `docs/adr/` when `CONTEXT-MAP.md` exists and the change falls inside that context (see `domain-modeling`'s file structure) — root and per-context ADRs both apply, not one or the other, since cross-context decisions live at root precisely because they bind more than one context. Read every ADR in those directories and skip any not accepted — explicitly marked `proposed`, `deprecated`, or `superseded by` in its Status frontmatter (`domain-modeling/ADR-FORMAT.md`; no Status line means accepted); report only the ones the diff actually contradicts. An ADR is a standards source like any other here — the diff either honors the decision it recorded or it doesn't.
 
@@ -43,6 +43,8 @@ On top of whatever the repo documents, the Standards axis always carries the **s
 - **Always a judgement call.** Each smell is a labelled heuristic ("possible Feature Envy"), never a hard violation. Like any standard here, skip anything tooling already enforces.
 
 ### 4. Spawn both sub-agents in parallel
+
+Issue both sub-agent calls together, in the foreground, and aggregate the reports they return.
 
 **Standards sub-agent prompt** should include:
 
