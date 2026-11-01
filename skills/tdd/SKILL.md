@@ -7,7 +7,7 @@ description: Test-driven development at pre-agreed seams. Use when the user want
 
 TDD is the red → verify red → green → verify green loop, plus one refactor pass at the end of each ticket. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop and the Iron Law that gives it teeth. Every section applies on every cycle: consult them before and during the loop, not after.
 
-When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
+When exploring the codebase, read `GLOSSARY.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
 
 ## The Iron Law
 

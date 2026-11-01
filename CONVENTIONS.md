@@ -16,7 +16,7 @@ See `skills/vendoring/` for the checklist that enforces this when pulling in new
 All feature-work state lives under `.scratch/<feature-slug>/` in the target repo. Nothing here
 touches an external tracker — no GitHub issues, no Linear, no setup step. `.scratch/` is
 disposable: gitignore it, or delete it once a feature ships. Before deleting, cherry-pick any
-durable decision (an ADR, a `CONTEXT.md` update, a standing convention) into permanent docs — the
+durable decision (an ADR, a `GLOSSARY.md` update, a standing convention) into permanent docs — the
 scratch directory is where decisions get made, not where they live afterward.
 
 ```

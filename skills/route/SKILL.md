@@ -24,7 +24,7 @@ Once tickets exist under `.scratch/<feature>/issues/`, run `subagent-execution`.
 When every ticket is resolved, `subagent-execution` dispatches `code-review` automatically over the whole branch, one more pass on the same two axes plus the deferred-minor ledger. Once that's clean:
 
 1. Merge the branch.
-2. Cherry-pick any durable decision out of `.scratch/<feature>/` into permanent docs — an ADR, a `CONTEXT.md` update, a standing convention. `.scratch/` is disposable; nothing that should outlive the feature belongs only there.
+2. Cherry-pick any durable decision out of `.scratch/<feature>/` into permanent docs — an ADR, a `GLOSSARY.md` update, a standing convention. `.scratch/` is disposable; nothing that should outlive the feature belongs only there.
 3. Delete `.scratch/<feature>/`.
 
 ## Summary
