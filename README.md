@@ -61,7 +61,9 @@ itself. In short:
 Two more skills sit outside the linear flow and get called into whichever stage needs them:
 `pipeline:domain-modeling` (glossary/ADR discipline) and `pipeline:codebase-design` (deep-module
 vocabulary — where a seam goes, what an interface is). `pipeline:diagnosing-bugs` is a standalone
-diagnosis loop for hard bugs, not part of the feature pipeline. `pipeline:vendoring` is the
+diagnosis loop for hard bugs, not part of the feature pipeline. `pipeline:retro` looks back over a
+finished or troubled session and proposes changes to the agent's environment (checks, standards,
+steering files), and is invoked on request rather than as a stage. `pipeline:vendoring` is the
 checklist for pulling in more upstream skills later.
 
 ## Design decisions worth knowing
@@ -96,7 +98,7 @@ working, disable it:
 
 `ask-matt`, `setup-matt-pocock-skills`, `triage`, `grill-me`, `grill-with-docs`,
 `improve-codebase-architecture`, `resolving-merge-conflicts`, `prototype`, `handoff`, `teach`,
-`research`, `implement`, `wizard`, and superpowers' `brainstorming`, `writing-plans`,
+`research`, `implement`, `implement-spec`, `pr`, `wizard`, and superpowers' `brainstorming`, `writing-plans`,
 `executing-plans`, `using-git-worktrees`, `finishing-a-development-branch`, `using-superpowers`,
 `dispatching-parallel-agents`, `verification-before-completion`, `receiving-code-review`,
 `writing-skills`, `systematic-debugging`. See `VENDORED.md` for why each was dropped.
